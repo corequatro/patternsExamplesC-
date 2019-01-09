@@ -12,18 +12,17 @@ namespace TestCases.Patterns.Creational.AbstractFactory
 {
     public class TeslaFactory : ICarAbstractFactory
     {
-        private ElectroCar GetCarModel(ModelS car) => new ModelS { CarId = Guid.NewGuid(), CarModel = car.GetType().FullName.ToString() };
-        private ElectroCar GetCarModel(Model3 car) => new Model3 { CarId = Guid.NewGuid(), CarModel = car.GetType().FullName.ToString() };
-        public ElectroCar BuildElectroCar(ElectroCar car)
+        private ElectroCar GetCarModel(ModelSScheme car) => new ModelS { CarId = Guid.NewGuid(), CarModel = car.GetType().FullName };
+        private ElectroCar GetCarModel(Model3Scheme car) => new Model3 { CarId = Guid.NewGuid(), CarModel = car.GetType().FullName };
+       
+        public ElectroCar BuildElectroCar(ElectroCarScheme car)
         {
-            return GetCarModel((dynamic)car);
+            return Helper.DefineCarBuildMethod<TeslaFactory, ElectroCar, ElectroCarScheme>(car, nameof(GetCarModel), this);
         }
 
-
-
-        public GasCar BuildGasCar(GasCar car)
+        public GasCar BuildGasCar(GasCarScheme car)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

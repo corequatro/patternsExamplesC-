@@ -5,6 +5,7 @@
 
 using System;
 using TestCases.Patterns.Creational.AbstractFactory.ElectroCars;
+using TestCases.Patterns.Creational.AbstractFactory.ElectroCars.Audi;
 using TestCases.Patterns.Creational.AbstractFactory.GasCars;
 using TestCases.Patterns.Creational.AbstractFactory.GasCars.Audi;
 
@@ -12,15 +13,20 @@ namespace TestCases.Patterns.Creational.AbstractFactory
 {
     public class AudiFactory : ICarAbstractFactory
     {
-        private GasCar GetCarModel(AudiA8 car) => new AudiA8 { CarId = Guid.NewGuid(), CarModel = car.GetType().FullName };
-        public ElectroCar BuildElectroCar(ElectroCar car)
+        private GasCar GetCarModel(AudiA8Scheme car) => new AudiA8 { CarId = Guid.NewGuid(), CarModel = car.GetType().FullName };
+        private ElectroCar GetCarModel(AudiEtronScheme car) => new AudiEtron { CarId = Guid.NewGuid(), CarModel = car.GetType().FullName };
+
+        public ElectroCar BuildElectroCar(ElectroCarScheme car)
         {
-            return null;
+            return Helper.DefineCarBuildMethod<AudiFactory, ElectroCar, ElectroCarScheme>(car, nameof(GetCarModel), this);
         }
 
-        public GasCar BuildGasCar(GasCar car)
+        public GasCar BuildGasCar(GasCarScheme car)
         {
-            return GetCarModel((dynamic)car);
+            return Helper.DefineCarBuildMethod<AudiFactory, GasCar, GasCarScheme>(car, nameof(GetCarModel), this);
         }
+
+
+
     }
 }

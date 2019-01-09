@@ -10,7 +10,7 @@ namespace TestCases.Patterns.Creational.AbstractFactory
 {
     public interface ICarAbstractFactory
     {
-        ElectroCar BuildElectroCar(ElectroCar car);
-        GasCar BuildGasCar(GasCar car);
+        ElectroCar BuildElectroCar(ElectroCarScheme car);
+        GasCar BuildGasCar(GasCarScheme car);
     }
 }
